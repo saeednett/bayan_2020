@@ -1,0 +1,89 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title> صوتيات</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+<!--- Theme Parallax Players -->
+<ion-content elastic-header *ngIf="data != null" style="background-image: url(' + data.headerImage + '); background-position:center;">
+  <div background-size 
+  [ngStyle]="{'background-image': ' + data.headerImage + '}">
+    <!--Social Shere-->
+    <div float-right social>
+      <ion-icon (click)="onEvent('onLike', data)">
+        <i class="icon {{data.iconLike}}"></i>
+      </ion-icon>
+      <ion-icon (click)="onEvent('onFavorite', data)">
+        <i class="icon {{data.iconFavorite}}"></i>
+      </ion-icon>
+      <ion-icon  (click)="onEvent('onShare', data)">
+        <i class="icon {{data.iconShare}}"></i>
+      </ion-icon>
+    </div>
+    <!--Title parallax-->
+    <h1 parallax-title >{{data.title}}</h1>
+    <!---Play button-->
+    <div play-block *ngIf="data.title">
+      <ion-icon icon-medium item-left 
+       (click)="previous()">
+          <!-- (click)="onEvent('onSkipPrevious', data)"  -->
+        <i class="icon icon-skip-previous"></i>
+      </ion-icon>
+      <ion-icon icon-medium item-left (click)="play()"  *ngIf="true" >
+          <!-- (click)="onEvent('onPlay', data)" -->
+        <!-- <i class="icon {{data.iconPlay}}"  ></i> -->
+        <i class="icon icon-play " ></i>
+        <!-- icon-stop -->
+
+      </ion-icon>
+      <ion-icon icon-medium item-left (click)="pause()"   *ngIf="!true" (click)="pause()" >
+          <!-- (click)="onEvent('onPlay', data)" -->
+        <i class="icon  icon-pause" ></i>
+        <!-- {{data.iconPlay}} -->
+        <!-- <i class="icon {{data.iconLike}}"  *ngIf="!true"></i> -->
+
+      </ion-icon>
+      <ion-icon icon-medium item-left  (click)="next()">
+          <!-- (click)="onEvent('onSkipNext', data)" -->
+        <i class="icon icon-skip-next"></i>
+      </ion-icon>
+    </div>
+  </div>
+
+  <!--Content-->
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col col-12>
+        <ion-list no-margin>
+           
+          <ion-item *ngFor="let item of data.items;let i = index" 
+          (click)="openFile(item, i)">
+          <!-- (click)="onEvent('onItemClick', item)"  -->
+            <ion-avatar item-left>
+              <img [src]="item.default_image">
+            </ion-avatar>
+            <h2 item-title>{{item.title}}</h2>
+            <h3 item-subtitle>{{item.content}}</h3>
+            <!-- <p item-end *ngIf="currentFile.index === i">SELECTED</p> -->
+            <ion-icon item-end icon-medium  (click)="stop()"   *ngIf="5== i"><i class="icon icon-stop"></i></ion-icon>
+            <ion-icon item-end icon-medium  (click)="play()"   *ngIf="5 !== i"><i class="icon icon-play-circle-outline"></i></ion-icon>
+
+            
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
+</ion-content>
+<!-- Fab Button -->
+<!-- <ion-fab #fab bottom right>
+  <button button-ion-fab ion-fab (click)="onEvent('onFab', data, $event)">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-fab> -->

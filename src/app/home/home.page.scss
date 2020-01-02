@@ -1,0 +1,112 @@
+
+@mixin black-white-mode {
+    background-color: theme-colors('blendModes', 'primary');
+    background-blend-mode: luminosity;
+  }
+  
+  /*  8# Blend Mode Colors
+  =======================================================*/
+  @mixin darkening-blend-mode {
+      @include black-white-mode;
+       &::before {
+         content: "";
+         display: block;
+         height: 100%;
+         width: 100%;
+         top: 0;
+         left: 0;
+         position: absolute;
+         pointer-events: none;
+         mix-blend-mode: multiply;
+        background-color: theme-colors('blendModes', 'secondary');
+       }
+  }
+
+  page-home {
+    [default-background] {
+    //   background-image: url("../assets/images/background/29.jpg");
+      height: 100%;
+      width: 100%;
+      display: table;
+  
+      .ionic-description {
+        display: table-cell;
+        vertical-align: middle;
+  
+        h2[item-title] {
+          margin: 0;
+        }
+  
+        p[item-subtitle] {
+          color: theme-colors('mainColors', 'secondary') !important;
+        }
+      }
+  
+      a {
+        color: theme-colors('textColors', 'accent') !important;
+        text-decoration: underline;
+        visibility: visible !important;
+        position: absolute;
+        bottom: 25px;
+        left: 25px;
+      }
+    }
+  
+    ion-header {
+      .toolbar-content-ios {
+        .title-ios {
+          width: 85%;
+          left: 10px;
+        }
+  
+        .button-ios {
+          height: 3rem;
+          position: absolute;
+          right: 5px;
+          top: 20px;
+        }
+      }
+  
+      ion-title {
+        width: 70%;
+      }
+  
+      [defoult-button] {
+        background: #0bb1af;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+      }
+    }
+  
+}
+
+
+ 
+    [background-size] {
+        @include darkening-blend-mode;
+        height: 250px;
+        position: relative;
+    }
+    [play-block] {
+        position: absolute;
+        left: 30px;
+        bottom: 10px;
+        [icon-small] {
+            z-index: 99;
+        }
+    }
+    [parallax-title] {
+        z-index: 9;
+        padding-top: 130px;
+        display: block;
+        position: relative;
+        margin: 0 45px;
+    }
+    [social] {
+        z-index: 99;
+        position: relative;
+        padding: 10px;
+    }
+
+  
