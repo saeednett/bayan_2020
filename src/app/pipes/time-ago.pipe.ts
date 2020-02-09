@@ -3,7 +3,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 // When fixed, uncomment this
 // import * as dayjs from 'dayjs';
 import * as _dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+// export default _dayjs;
+
+// import relativeTime from 'dayjs/plugin/relativeTime';
+// tslint:disable-next-line: no-unused-expression
+// tslint:disable-next-line: import-spacing
+// import relativeTime  from 'dayjs/plugin/relativeTime';
+// export default relativeTime;
+
+
 
 // TODO:  dayjs is throiwing this ERROR:
 //        error TS2339: Property 'to' does not exist on type 'Dayjs'.
@@ -14,7 +22,7 @@ const dayjs: any = _dayjs;
 @Pipe({ name: 'appTimeAgo' })
 export class TimeAgoPipe implements PipeTransform {
   transform(value: any): string {
-    dayjs.extend(relativeTime);
+    // dayjs.extend(relativeTime);
     let timeAgo = '';
 
     if (value) {

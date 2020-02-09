@@ -10,8 +10,8 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class ArticlesPage implements OnInit {
-data:any;
-  constructor() { 
+data: any;
+  constructor() {
     this.data =  [
       {
           id: 1,
@@ -85,7 +85,7 @@ data:any;
       }
   ];
 
-  console.log(this.data);
+    console.log(this.data);
   }
 
   ngOnInit() {

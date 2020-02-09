@@ -1,142 +1,177 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {Howl, Howler} from 'howler';
+import { IonRange } from '@ionic/angular';
+
+export interface Track {
+   name: string;
+   path: string;
+   url: string;
+   image: string;
+ }
+
 
 @Component({
   selector: 'app-audios',
   templateUrl: './audios.page.html',
-  styleUrls: ['./audios.page.scss'],
-})
+  styleUrls: [
+   './styles/notifications.page.scss',
+   './styles/notifications.shell.scss'
+ ]})
 export class AudiosPage implements OnInit {
-private data:any;
-private file;
-private currentFile;
-  constructor() { 
-    this.data = {
-      "headerImage":"assets/images/background/14.jpg",
-      "toolBarTitle":"Player",
-      "title":"ArtistName",
-      "iconLike":"icon-thumb-up",
-      "iconFavorite":"icon-heart",
-      "iconShare":"icon-share-variant",
-      "iconSkipPrevious":"icon-skip-previous",
-      "iconPlay":"icon-play",
-      "iconSkipNext":"icon-skip-next",
-      "items":[
-         {
-            "id":1,
-            "title":"Highway 49",
-            "description":"George Thorogood",
-            "image":"./assets/images/avatar/0.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         },
-         {
-            "id":2,
-            "title":"A Man Of Many Words",
-            "description":"Buddy Guy",
-            "image":"assets/images/avatar/1.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         },
-         {
-            "id":3,
-            "title":"Don’t Think Twice",
-            "description":"Susan Tedeschi",
-            "image":"assets/images/avatar/2.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         },
-         {
-            "id":4,
-            "title":"Everyday I Have the Blues",
-            "description":"B.B. King",
-            "image":"assets/images/avatar/3.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         },
-         {
-            "id":5,
-            "title":"Love Me Like a Man",
-            "description":"Bonnie Raitt",
-            "image":"assets/images/avatar/4.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         },
-         {
-            "id":6,
-            "title":"Five Long Years",
-            "description":"	Ike and Tina Turner",
-            "image":"assets/images/avatar/5.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         },
-         {
-            "id":7,
-            "title":"Sacred Ground",
-            "description":"John Mooney",
-            "image":"assets/images/avatar/6.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         },
-         {
-            "id":8,
-            "title":"Sinner’s Prayer",
-            "description":"Ray Charles",
-            "image":"assets/images/avatar/7.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         },
-         {
-            "id":9,
-            "title":"Statesboro Blues",
-            "description":"Allman Brothers Band",
-            "image":"assets/images/avatar/1.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         },
-         {
-            "id":10,
-            "title":"Walking by Myself",
-            "description":"Jimmy Rogers",
-            "image":"assets/images/avatar/2.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         },
-         {
-            "id":11,
-            "title":"Lovin’ In My Baby’s Eyes",
-            "description":"Taj Mahal",
-            "image":"assets/images/avatar/0.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         },
-         {
-            "id":12,
-            "title":"Think It Over",
-            "description":"Dave Hole",
-            "image":"assets/images/avatar/3.jpg",
-            "imageAlt":"avatar",
-            "icon":"icon-heart-outline",
-            "duration":"3:42"
-         }
-      ]
-  };
+   @ViewChild('range', { static: false}) range: IonRange;
+  activeTrack: Track = null;
+  player: Howl = null;
+  isPlaying = false;
+  progress = 0;
+  currentFile: any = {};
+  title = '';
+  playList: Track[] = [
+    {
+      name: 'anewbeginning',
+      path: './assets/mp3/bensound-anewbeginning.mp3',
+      image: './assets/sample-images/notifications/100x100Notification1.jpg',
+      url: 'https://ia801504.us.archive.org/3/items/EdSheeranPerfectOfficialMusicVideoListenVid.com/Ed_Sheeran_-_Perfect_Official_Music_Video%5BListenVid.com%5D.mp3',
+
+    },
+    {
+      name: 'creativeminds',
+      path: './assets/mp3/bensound-creativeminds.mp3',
+      image: './assets/sample-images/notifications/100x100Notification1.jpg',
+      url: 'https://ia801609.us.archive.org/16/items/nusratcollection_20170414_0953/Man%20Atkiya%20Beparwah%20De%20Naal%20Nusrat%20Fateh%20Ali%20Khan.mp3',
+    },
+    {
+      name: 'Summer',
+      path: './assets/mp3/bensound-summer.mp3',
+      image: './assets/sample-images/notifications/100x100Notification1.jpg',
+      url: 'https://ia801504.us.archive.org/3/items/EdSheeranPerfectOfficialMusicVideoListenVid.com/Ed_Sheeran_-_Perfect_Official_Music_Video%5BListenVid.com%5D.mp3',
+
+    },
+    {
+      name: 'Highway 49',
+      path: './assets/mp3/bensound-anewbeginning.mp3',
+      image: './assets/sample-images/notifications/100x100Notification1.jpg',
+      url: 'https://ia801504.us.archive.org/3/items/EdSheeranPerfectOfficialMusicVideoListenVid.com/Ed_Sheeran_-_Perfect_Official_Music_Video%5BListenVid.com%5D.mp3',
+
+    },
+    {
+      name: 'A Man Of Many Word',
+      path: './assets/mp3/bensound-anewbeginning.mp3',
+      image: './assets/sample-images/notifications/100x100Notification1.jpg',
+      url: 'https://ia801504.us.archive.org/3/items/EdSheeranPerfectOfficialMusicVideoListenVid.com/Ed_Sheeran_-_Perfect_Official_Music_Video%5BListenVid.com%5D.mp3',
+
+    }, {
+      name: 'Don’t Think Twice',
+      path: './assets/mp3/bensound-anewbeginning.mp3',
+      image: './assets/sample-images/notifications/100x100Notification1.jpg',
+      url: 'https://ia801504.us.archive.org/3/items/EdSheeranPerfectOfficialMusicVideoListenVid.com/Ed_Sheeran_-_Perfect_Official_Music_Video%5BListenVid.com%5D.mp3',
+
+    }, {
+      name: 'Everyday I Have the Blues',
+      path: './assets/mp3/bensound-anewbeginning.mp3',
+      image: './assets/sample-images/notifications/100x100Notification1.jpg',
+      // tslint:disable-next-line: max-line-length
+      url: 'https://ia801504.us.archive.org/3/items/EdSheeranPerfectOfficialMusicVideoListenVid.com/Ed_Sheeran_-_Perfect_Official_Music_Video%5BListenVid.com%5D.mp3',
+
+    }, {
+      name: 'Love Me Like a Man',
+      path: './assets/mp3/bensound-anewbeginning.mp3',
+      image: './assets/sample-images/notifications/100x100Notification1.jpg',
+      url: 'https://ia801504.us.archive.org/3/items/EdSheeranPerfectOfficialMusicVideoListenVid.com/Ed_Sheeran_-_Perfect_Official_Music_Video%5BListenVid.com%5D.mp3',
+
+    }, {
+      name: 'Think It Over',
+      path: './assets/mp3/bensound-anewbeginning.mp3',
+      image: './assets/sample-images/notifications/100x100Notification1.jpg',
+      url: 'https://ia801504.us.archive.org/3/items/EdSheeranPerfectOfficialMusicVideoListenVid.com/Ed_Sheeran_-_Perfect_Official_Music_Video%5BListenVid.com%5D.mp3',
+
+    },
+
+  ];
+
+private data: any;
+  constructor() {
+
 
   }
 
   ngOnInit() {
   }
 
-  play(){}
+  stop() {
+   this.player.stop();
+  }
+
+  openFile(file, index) {
+   this.title = file.title;
+   this.currentFile = { index, file };
+   console.log(this.currentFile);
+   this.start(file);
+   // console.log(this.state);
+ }
+
+  start(track: Track) {
+   console.log(track.name);
+   if (this.player) {
+   this.player.stop();
+  }
+
+   this.player = new Howl({
+       html5: true,
+     src: track.url,
+     // urls: [track.url],
+     // https://stackoverflow.com/questions/59468679/ionic-4-play-single-audio-with-howler-with-one-click-event
+
+     onplay: () => {
+       console.log('onplay');
+       this.isPlaying = true;
+       this.activeTrack = track;
+       console.log(this.activeTrack );
+       this.updateProgress();
+     },
+     onend: () => {
+       console.log('onend');
+     }
+     });
+   this.player.play();
+ }
+
+ togglePlayer(pause) {
+   this.isPlaying = !pause;
+   if (pause) {
+     this.player.pause();
+   } else {
+     this.player.play();
+   }
+ }
+ next() {
+   const index = this.playList.indexOf(this.activeTrack);
+   if (index != this.playList.length - 1) {
+     this.start(this.playList[index + 1]);
+   } else {
+     this.start(this.playList[0]);
+   }
+ }
+ prev() {
+   const index = this.playList.indexOf(this.activeTrack);
+   if (index > 0) {
+     this.start(this.playList[index - 1]);
+   } else {
+     this.start(this.playList[this.playList.length - 1]);
+   }
+ }
+ seek() {
+   const newValue = +this.range.value;
+   const duration = this.player.duration();
+   this.player.seek(duration * (newValue / 100));
+ }
+ updateProgress() {
+   const seek = this.player.seek();
+   this.progress = (seek / this.player.duration() ) * 100 || 0 ;
+   setTimeout(() => {
+     this.updateProgress();
+   }, 1000);
+ }
+
+
 
 }

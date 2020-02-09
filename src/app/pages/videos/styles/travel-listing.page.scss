@@ -7,6 +7,8 @@
   --page-color: #00AFFF;
 }
 
+
+
 // Note:  All the CSS variables defined below are overrides of Ionic elements CSS Custom Properties
 .listing-item {
   padding: 0px 0px var(--page-margin);
@@ -25,7 +27,7 @@
     }
 
     .content-inside-item-image {
-      padding: 0px 12%;
+      // padding: 0px 12%;
       height: 100%;
       display: flex;
       justify-content: center;

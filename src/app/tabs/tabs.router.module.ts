@@ -32,7 +32,8 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren:() => import('../pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
+            loadChildren:() => import('../pages/audios/audios.module').then(m => m.AudiosPageModule)
+            // loadChildren:() => import('../pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
          },
           {
             path: 'friends',

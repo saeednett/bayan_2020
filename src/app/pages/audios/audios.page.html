@@ -1,89 +1,89 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title> صوتيات</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      الصوتيات
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content full class="notifications-content">
 
-<!--- Theme Parallax Players -->
-<ion-content elastic-header *ngIf="data != null" style="background-image: url(' + data.headerImage + '); background-position:center;">
-  <div background-size 
-  [ngStyle]="{'background-image': ' + data.headerImage + '}">
-    <!--Social Shere-->
-    <div float-right social>
-      <ion-icon (click)="onEvent('onLike', data)">
-        <i class="icon {{data.iconLike}}"></i>
-      </ion-icon>
-      <ion-icon (click)="onEvent('onFavorite', data)">
-        <i class="icon {{data.iconFavorite}}"></i>
-      </ion-icon>
-      <ion-icon  (click)="onEvent('onShare', data)">
-        <i class="icon {{data.iconShare}}"></i>
-      </ion-icon>
-    </div>
-    <!--Title parallax-->
-    <h1 parallax-title >{{data.title}}</h1>
-    <!---Play button-->
-    <div play-block *ngIf="data.title">
-      <ion-icon icon-medium item-left 
-       (click)="previous()">
-          <!-- (click)="onEvent('onSkipPrevious', data)"  -->
-        <i class="icon icon-skip-previous"></i>
-      </ion-icon>
-      <ion-icon icon-medium item-left (click)="play()"  *ngIf="true" >
-          <!-- (click)="onEvent('onPlay', data)" -->
-        <!-- <i class="icon {{data.iconPlay}}"  ></i> -->
-        <i class="icon icon-play " ></i>
-        <!-- icon-stop -->
+    <ion-row class="image-row">
+        <ion-col size="12">
+          <app-image-shell [mode]="'cover'" animation="spinner" class="add-overlay details-image" src="./assets/sample-images/travel/travel-details-image.png">
+            <app-aspect-ratio [ratio]="{w:64, h:50}">
+              <!-- <div class="icon-wrapper">
+                <app-aspect-ratio [ratio]="{w: 47, h: 25}">
+                  <app-image-shell src="./assets/sample-images/travel/travel-details-image.png" class="details-icon"></app-image-shell>
+                </app-aspect-ratio>
+              </div> -->
+              <div class="icon-wrapper" dir="ltr">
 
-      </ion-icon>
-      <ion-icon icon-medium item-left (click)="pause()"   *ngIf="!true" (click)="pause()" >
-          <!-- (click)="onEvent('onPlay', data)" -->
-        <i class="icon  icon-pause" ></i>
-        <!-- {{data.iconPlay}} -->
-        <!-- <i class="icon {{data.iconLike}}"  *ngIf="!true"></i> -->
-
-      </ion-icon>
-      <ion-icon icon-medium item-left  (click)="next()">
-          <!-- (click)="onEvent('onSkipNext', data)" -->
-        <i class="icon icon-skip-next"></i>
-      </ion-icon>
-    </div>
-  </div>
-
-  <!--Content-->
-  <ion-grid no-padding>
-    <ion-row>
-      <ion-col col-12>
-        <ion-list no-margin>
-           
-          <ion-item *ngFor="let item of data.items;let i = index" 
-          (click)="openFile(item, i)">
-          <!-- (click)="onEvent('onItemClick', item)"  -->
-            <ion-avatar item-left>
-              <img [src]="item.default_image">
-            </ion-avatar>
-            <h2 item-title>{{item.title}}</h2>
-            <h3 item-subtitle>{{item.content}}</h3>
-            <!-- <p item-end *ngIf="currentFile.index === i">SELECTED</p> -->
-            <ion-icon item-end icon-medium  (click)="stop()"   *ngIf="5== i"><i class="icon icon-stop"></i></ion-icon>
-            <ion-icon item-end icon-medium  (click)="play()"   *ngIf="5 !== i"><i class="icon icon-play-circle-outline"></i></ion-icon>
-
+              <ion-row  *ngIf="activeTrack " dir="ltr">
+                  <ion-col size="12" class="ion-text-center" style=" text-align: center" color="primary">
+                      <h1 style="color: #cb933e">{{ activeTrack.name }}</h1>
+             </ion-col>
+                  <ion-col size="12" >
+                    <ion-range   #range [(ngModel)]="progress" max="100"  (touchend)="seek()" (mouseup)="seek()" ></ion-range>
+                </ion-col>
+                <ion-col size="12" style=" text-align: center">
+                <ion-button fill="clear" (click)="prev()"> 
+                  <ion-icon slot="icon-only" name="skip-backward"></ion-icon>
+                </ion-button>   
+                
+                <ion-button fill="clear" (click)="togglePlayer(false)" *ngIf="!isPlaying"> 
+                    <ion-icon slot="icon-only" name="play"></ion-icon>
+                  </ion-button>   
+                  <ion-button fill="clear"  (click)="togglePlayer(true)" *ngIf="isPlaying"> 
+                      <ion-icon slot="icon-only" name="pause"></ion-icon>
+                    </ion-button>  
             
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+                    <ion-button fill="clear"  (click)="next()"> 
+                        <ion-icon slot="icon-only" name="skip-forward"></ion-icon>
+                      </ion-button>  
+             </ion-col>
+                </ion-row>
+                </div>
+            </app-aspect-ratio>
+          </app-image-shell>
+        </ion-col>
+      </ion-row>
+  <ng-container *ngIf="playList" >
 
-  
+
+<div *ngFor="let track of playList;let i = index">
+    <ion-item-group >
+      <ion-item-divider sticky>
+        <ion-label>{{ track.name }}</ion-label>
+      </ion-item-divider>
+      <ion-item class="notification-item" lines="none" *ngFor="let track of playList;let i = index" >
+        <ion-row class="notification-item-wrapper" >
+          <ion-col size="2">
+            <app-aspect-ratio [ratio]="{w: 1, h: 1}">
+              <app-image-shell class="notification-image" [src]="track.image" [alt]="'user image'"></app-image-shell>
+            </app-aspect-ratio>
+          </ion-col>
+          <ion-col class="details-wrapper">
+            <h2 class="details-name">{{ track.name }}</h2>
+            <!-- <p class="details-description">{{ notification.message }}</p> -->
+          </ion-col>
+          <ion-col size="2" class="date-wrapper">
+            <ion-button (click)="start(track)" *ngIf="activeTrack  != track"> 
+              <ion-icon slot="icon-only" name="play"></ion-icon>
+            </ion-button>   
+            <ion-button   (click)="stop()" *ngIf="activeTrack == track"> 
+                <ion-icon slot="icon-only" name="pulse"></ion-icon>
+              </ion-button>  
+
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-item-group>
+
+
+    </div>
+  </ng-container>
 </ion-content>
-<!-- Fab Button -->
-<!-- <ion-fab #fab bottom right>
-  <button button-ion-fab ion-fab (click)="onEvent('onFab', data, $event)">
-    <ion-icon name="add"></ion-icon>
-  </button>
-</ion-fab> -->

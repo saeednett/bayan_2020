@@ -8,10 +8,10 @@ import { IonicModule } from '@ionic/angular';
 import { VideosPage } from './videos.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
-// import { VgCoreModule } from 'videogular2/compiled/core';
-// import { VgControlsModule } from 'videogular2/compiled/controls';
-// import { VgOverlayPlayModule } from 'videogular2/compiled/overlay-play';
-// import { VgBufferingModule } from 'videogular2/compiled/buffering';
+import { VgCoreModule } from 'videogular2/compiled/core';
+import { VgControlsModule } from 'videogular2/compiled/controls';
+import { VgOverlayPlayModule } from 'videogular2/compiled/overlay-play';
+import { VgBufferingModule } from 'videogular2/compiled/buffering';
 const routes: Routes = [
   {
     path: '',
@@ -29,10 +29,10 @@ const routes: Routes = [
     IonicModule,
     ComponentsModule,
     RouterModule.forChild(routes),
-    //  VgCoreModule,
-    // VgControlsModule,
-    // VgOverlayPlayModule,
-    // VgBufferingModule
+     VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   declarations: [VideosPage]
 })
